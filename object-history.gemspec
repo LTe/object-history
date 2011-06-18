@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/object-history.rb",
     "lib/object-history/object-history.rb",
     "lib/object-history/rspec-matchers.rb",
+    "object-history.gemspec",
     "spec/object-history_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/track_object.rb"
