@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{object-history}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Piotr Niełacny"]
@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
     "object-history.gemspec",
     "spec/object-history_spec.rb",
     "spec/spec_helper.rb",
+    "spec/support/accessor.rb",
+    "spec/support/post.rb",
     "spec/support/track_object.rb"
   ]
   s.homepage = %q{http://github.com/LTe/object-history}
