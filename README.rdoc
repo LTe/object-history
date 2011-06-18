@@ -1,6 +1,7 @@
 = object-history
 
 Test your objects with history path.
+
 http://travis-ci.org/LTe/object-history.png
 
 == Instalation
