@@ -21,7 +21,6 @@ describe "ObjectHistory" do
   end
 
   context "deep clone" do
-
     before(:each) do
       @track_object = TrackedObject.new(TrackedObject.new)
     end
@@ -37,6 +36,33 @@ describe "ObjectHistory" do
 
       @track_object.should have_track(:number, [0,1,2,3])
       @track_object.track_object.should have_track(:number, [0,1,2,3,4])
+    end
+  end
+
+  context "post" do
+    before(:each) do
+      @post = Post.new
+    end
+
+    it "should have [:new, :loaded, :accepted, :sent] path" do
+      @post.load
+      @post.accept
+      @post.send_post
+
+      @post.should have_track(:status, [:new, :loaded, :accepted, :sent])
+    end
+  end
+
+  context "accessor" do
+    before(:each) do
+      @accessor = Accessor.new
+    end
+
+    it "should track accessor" do
+      @accessor.version = 5
+      @accessor.version = 10
+
+      @accessor.should have_track(:version, [0,5,10])
     end
   end
 end

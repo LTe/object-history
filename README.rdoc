@@ -19,7 +19,8 @@ And on bottom of class add the methods that you want to track
     track_history_of :your_method
   end
 
-== Example
+== Examples
+=== Track object
   class TrackedObject
     attr_accessor :number
 
@@ -48,6 +49,69 @@ After that you can test with rspec using *have_track* matcher ;-)
       @track_object.should have_track(:number, [0,1,2,3])
     end
   end
+
+=== Post example
+  class Post
+    attr_accessor :status
+
+    def initialize
+      @status = :new
+    end
+
+    def accept
+      @status = :accepted
+    end
+
+    def send_post
+      @status = :sent
+    end
+
+    def load
+      @status = :loaded
+    end
+
+    include ObjectHistory
+    track_history_of :accept, :send_post, :load
+  end
+
+And *Rspec*
+  before(:each) do
+    @post = Post.new
+  end
+
+  it "should have [:new, :loaded, :accepted, :sent] path" do
+    @post.load
+    @post.accept
+    @post.send_post
+
+    @post.should have_track(:status, [:new, :loaded, :accepted, :sent])
+  end
+
+=== Accessors
+  class Accessor
+    attr_accessor :version
+
+    def initialize
+      @version = 0
+    end
+
+    include ObjectHistory 
+    track_history_of :version=
+  end
+
+*Rspec*
+    before(:each) do
+      @accessor = Accessor.new
+    end
+
+    it "should track accessor" do
+      @accessor.version = 5
+      @accessor.version = 10
+
+      @accessor.should have_track(:version, [0,5,10])
+    end
+
+
 
 === Deep clone?
 Works
