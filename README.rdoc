@@ -1,6 +1,6 @@
 = object-history
 
-Test your objects with history path.
+Test your objects with history path. Simply select the method around which will create a deep copy of an object and see how the object changed during operation.
 
 http://travis-ci.org/LTe/object-history.png
 
