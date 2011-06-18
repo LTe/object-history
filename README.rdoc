@@ -1,9 +1,61 @@
 = object-history
 
-Description goes here.
+Test your objects with history path.
+
+== Instalation
+Add to your Gemfile
+  gem 'object-history'
+
+== How to use
+Just include *ObjectHistory* to class.
+  class TrackedObject
+    include ObjectHistory
+  end
+
+And on bottom of class add the methods that you want to track
+  class TrackedObject
+    include ObjectHistory
+    track_history_of :your_method
+  end
+
+== Example
+  class TrackedObject
+    attr_accessor :number
+
+    def initialize(child = nil)
+      @number = 0
+    end
+
+    def add_one(*args, &block)
+      @number += 1
+      block.call(self) if block_given?
+    end
+
+    include ObjectHistory
+    track_history_of :add_one
+  end
+
+After that you can test with rspec using *have_track* matcher ;-)
+
+  describe TrackObject do
+    before(:each) do
+      @track_object = TrackObject.new
+    end
+
+    it "should every execute add one to :number" do
+      3.times {@track_object.add_one}
+      @track_object.should have_track(:number, [0,1,2,3])
+    end
+  end
+
+=== Deep clone?
+Works
+=== method_missing?
+Fuck method_missing ;*. Just deal with it.
+
 
 == Contributing to object-history
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
